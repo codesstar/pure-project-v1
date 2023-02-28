@@ -1,10 +1,13 @@
 package com.example.demo.entity;
 
+import cn.hutool.core.date.DateTime;
 import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 import lombok.Data;
+
+import java.util.Date;
 
 @Data
 @TableName(value = "t_fruit")
@@ -23,4 +26,6 @@ public class User {
 //    @TableField(value = "remark")指定数据库的字段名称
     private String remark;
     private String avatarUrl;
+    @TableField(value = "createTime")
+    private Date createTime;
 }
