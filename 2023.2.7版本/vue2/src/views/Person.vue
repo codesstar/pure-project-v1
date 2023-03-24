@@ -3,7 +3,7 @@
     <el-form label-width="80px" size="small">
      <el-upload
           class="avatar-uploader"
-          action="http://localhost:9090/file/upload"
+          action="http://47.113.199.13:9090/file/upload"
           :show-file-list="false"
           :on-success="handleAvatarSuccess"
       >

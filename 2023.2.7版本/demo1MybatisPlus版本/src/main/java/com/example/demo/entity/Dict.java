@@ -6,17 +6,13 @@ import com.baomidou.mybatisplus.annotation.TableName;
 import lombok.Data;
 
 @Data
-@TableName("sys_file")
-public class Files {
+@TableName("sys_dict")
+public class Dict {
 
     @TableId(type = IdType.AUTO)
-    private Integer id;
+
     private String name;
+    private String value;
     private String type;
-    private Long size;
-    private String url;
-    private String md5;
-    private Boolean isDelete;
-    private Boolean enable;
 
 }

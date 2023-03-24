@@ -28,4 +28,5 @@ public class User {
     private String avatarUrl;
     @TableField(value = "createTime")
     private Date createTime;
+    private String role;
 }

@@ -1,12 +1,14 @@
 server:
+  ip: 47.113.199.13
   port: 9090
 
 spring:
     datasource:
      driver-class-name: com.mysql.cj.jdbc.Driver
-     url: jdbc:mysql://localhost:3306/fruitdb?useUnicode=true&characterEncoding=utf8&useSSL=false
+     url: jdbc:mysql://47.113.199.13:3306/fruitdb?useUnicode=true&characterEncoding=utf8&useSSL=false
      username: root
-     password: 123456
+     password: root
+#     //服务器和本地的密码不同需要改一下，服务器密码是root
 
 #这是让mapper文件在没有找到手写的注解时2能找到xml的配置
 mybatis:
@@ -17,4 +19,6 @@ mybatis-plus:
 
 files:
   upload:
-    path: D:/桌面文件/小白做毕设/files/
+    path: /home/files
+
+    #這裏一定要寫/home/files/ 不能只寫home/files 否則會找不到

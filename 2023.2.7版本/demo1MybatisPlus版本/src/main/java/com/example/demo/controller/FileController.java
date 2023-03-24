@@ -34,6 +34,9 @@ import java.util.List;
         @Value("${files.upload.path}")
         private String fileUploadPath;
 
+        @Value("${server.ip}")
+        private String serverIp;
+
         @Resource
         private FileMapper fileMapper;
 
@@ -81,7 +84,7 @@ import java.util.List;
                 // 上传文件到磁盘，将文件转移到刚创建的空文件那里
                 file.transferTo(uploadFile);
                 // 数据库若不存在重复文件，则不删除刚才上传的文件
-                url = "http://localhost:9090/file/" + fileUUID;
+                url = "http://"+serverIp+":9090/file/" + fileUUID;
             }
 
             // 存储数据库   这里的逻辑是相同文件不同名字也存储到数据库，其实没必要
@@ -105,7 +108,7 @@ import java.util.List;
         @GetMapping("/{fileUUID}")
         public void download(@PathVariable String fileUUID, HttpServletResponse response) throws IOException {
             // 根据文件的唯一标识码获取文件
-            File uploadFile = new File(fileUploadPath + fileUUID);
+            File uploadFile = new File(fileUploadPath + fileUUID); //fileUplodadPath 要給他一個在哪尋找的路勁，然後在路勁裏找個唯一標識
             // 设置输出流的格式
             ServletOutputStream os = response.getOutputStream();
             response.addHeader("Content-Disposition", "attachment;filename=" + URLEncoder.encode(fileUUID, "UTF-8"));

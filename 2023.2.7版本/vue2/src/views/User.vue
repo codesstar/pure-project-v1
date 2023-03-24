@@ -28,9 +28,11 @@
             <el-table-column type="selection" width="55" >
             </el-table-column>
             <!-- 这里对应的prop是服务器form表单传过来对应的值，所以 这些值必须是User的属性-->
-            <el-table-column prop="fid" label="编号" width="140" >
-            </el-table-column>
+            <!-- <el-table-column prop="fid" label="编号" width="140" >
+            </el-table-column> -->
             <el-table-column prop="fname" label="姓名" width="120">
+            </el-table-column>
+            <el-table-column prop="role" label="角色信息" width="120">
             </el-table-column>
             <el-table-column prop="fcount" label="数量" width="140">
             </el-table-column>
@@ -63,6 +65,13 @@
       <el-form-item label="用户名" >
         <el-input v-model="form.fname" autocomplete="off"></el-input>
       </el-form-item>
+      <el-form-item label="角色" >
+        <el-select clearable v-model="form.role" placeholder="请选择角色" style="width: 100%">
+          <el-option v-for="item in roles" :key="item.name" :label="item.name" :value="item.flag">
+           
+          </el-option>
+        </el-select>
+      </el-form-item>
       <el-form-item label="数量" >
         <el-input v-model="form.fcount" autocomplete="off"></el-input>
       </el-form-item>
@@ -94,25 +103,30 @@
                 total:0,
                 form:{},
                 multipleSelection:[],
-                headerBg: 'headerBg'
+                headerBg: 'headerBg',
+                roles:[]
             }
         },
         methods: {
-            load(){
-      this.request.get("/user/page",{
-        params:{
-          pageNum:this.pageNum,
-          pageSize:this.pageSize,
-          fname:this.fname,
-          remark:this.remark
-        }
-      }).then(res =>{
-         console.log(res);
-        console.log("xxx")
-      this.tableData=res.records;
-      this.total=res.total;
-
+      load(){
+            this.request.get("/user/page",{
+              params:{
+                pageNum:this.pageNum,
+                pageSize:this.pageSize,
+                fname:this.fname,
+                remark:this.remark
+              }
+            }).then(res =>{
+              console.log(res);
+              console.log("xxx")
+            this.tableData=res.records;
+            this.total=res.total;
       })
+
+      this.request.get("/role").then(res =>{
+        this.roles=res.data
+      })
+
     },
     save(){
       console.log(this.form)
@@ -141,7 +155,9 @@
       this.multipleSelection=val
     },
     handleEdit(row){
-      this.form=row
+      this.form=row  
+      //我怀疑这里双向绑定了，不知道为什么修改form里的信息（编辑表格中的信息），row的内容在没点击确定之前会发生变换
+      //row的内容明明时tabledata维护的
       this.dialogFormVisible=true
     },
     delBatch(){
@@ -178,7 +194,7 @@
       this.form={}
     },
     exp() {
-	window.open("http://localhost:9090/user/export")
+	window.open("http://47.113.199.13:9090/user/export")
 },
 handleExcelImportSuccess() {
     this.$message.success("导入成功")

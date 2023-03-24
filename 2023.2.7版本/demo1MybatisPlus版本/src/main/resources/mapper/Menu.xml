@@ -1,28 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.example.demo.mapper.UserMapper">
+<mapper namespace="com.example.demo.mapper.MenuMapper">
 
-   <update id="update">
-       update t_fruit
-       <set>
-           <if test="fname !=null">
-               fname= #{fname},
-           </if>
-           <if test="price !=null">
-               price= #{price},
-           </if>
-           <if test="fname !=null">
-               fcount= #{fcount},
-           </if>
-           <if test="remark !=null">
-               remark= #{remark},
-           </if>
-       </set>
-       <where>
-           fid = #{fid}
-       </where>
-   </update>
+<!--   <select id="selectFather">-->
+<!--       select pid FROM sys_menu where pid is not NULL and id in-->
+<!--       <foreach collection="menuIds" item="userId" open="(" separator="," close=")">-->
+<!--           #{userId}-->
+<!--       </foreach>-->
+<!--   </select>-->
 
 
 

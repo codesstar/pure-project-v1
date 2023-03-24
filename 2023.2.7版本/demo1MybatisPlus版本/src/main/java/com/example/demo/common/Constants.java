@@ -7,4 +7,6 @@ public interface Constants {
     String Code_500="500";//系统错误
     String Code_600="600";//系统错误
     String CODE_401 = "401";
+
+    String DICT_TYPE_ICON="icon";
 }

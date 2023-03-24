@@ -42,9 +42,10 @@
         // 这里就是下面，要在这里校验，合不合法element-ui给你规定好了
         this.$refs['userForm'].validate((valid) => {
           if (valid) {  // 表单校验合法
-            this.request.post("/user/login", this.user).then(res => {
+            this.request.post("http://47.113.199.13:9090/user/login", this.user).then(res => {
               if(res.code==='200') {
                 localStorage.setItem("user",JSON.stringify(res.data))
+                 localStorage.setItem("menus",JSON.stringify(res.data.menus))
                 this.$router.push("/")
                 this.$message.success("登录成功")
               } else {
