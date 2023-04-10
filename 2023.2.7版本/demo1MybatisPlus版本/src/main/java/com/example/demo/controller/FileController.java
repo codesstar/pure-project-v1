@@ -6,7 +6,9 @@ import cn.hutool.core.util.StrUtil;
 import cn.hutool.crypto.SecureUtil;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import com.example.demo.common.Constants;
 import com.example.demo.common.Result;
+import com.example.demo.config.AuthAccess;
 import com.example.demo.entity.Files;
 import com.example.demo.mapper.FileMapper;
 import org.springframework.beans.factory.annotation.Value;
@@ -99,12 +101,18 @@ import java.util.List;
             return url;
         }
 
+        @GetMapping("/detail/{id}")
+        public Result getById(@PathVariable Integer id) {
+            return Result.success(fileMapper.selectById(id));
+        }
+
         /**
          * 文件下载接口   http://localhost:9090/file/{fileUUID}
          * @param fileUUID
          * @param response
          * @throws IOException
          */
+        @AuthAccess
         @GetMapping("/{fileUUID}")
         public void download(@PathVariable String fileUUID, HttpServletResponse response) throws IOException {
             // 根据文件的唯一标识码获取文件
@@ -134,6 +142,7 @@ import java.util.List;
             return filesList.size() == 0 ? null : filesList.get(0);
         }
 
+        @AuthAccess
         @PostMapping("/update")
         public Result update(@RequestBody Files files) {
             return Result.success(fileMapper.updateById(files));
@@ -180,6 +189,20 @@ import java.util.List;
                 queryWrapper.like("name", name);
             }
             return Result.success(fileMapper.selectPage(new Page<>(pageNum, pageSize), queryWrapper));
+        }
+
+        @AuthAccess
+        @GetMapping("/front/getall")
+
+//    @Cacheable(value = "files" ,key = "'frontAll'")
+        public Result frontAll() {
+            // 1. 从缓存获取数据
+
+            List<Files> files;
+
+                files = fileMapper.selectList(null);  // 3. 从数据库取出数据
+
+            return Result.success(files);
         }
     }
 

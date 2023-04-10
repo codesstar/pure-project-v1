@@ -42,6 +42,7 @@ public class UserController {
     public Result login(@RequestBody UserDTO userDTO){
         String username= userDTO.getFname();
         String remark=userDTO.getRemark();
+
         if(StrUtil.isBlank(username)||StrUtil.isBlank(remark)){
             return Result.error(Constants.Code_400,"参数错误");
         }

@@ -1,6 +1,7 @@
 package com.example.demo.service;
 
 import cn.hutool.core.bean.BeanUtil;
+import cn.hutool.core.util.StrUtil;
 import cn.hutool.log.Log;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
@@ -13,6 +14,7 @@ import com.example.demo.mapper.RoleMapper;
 import com.example.demo.mapper.RoleMenuMapper;
 import com.example.demo.mapper.UserMapper;
 import com.example.demo.utils.TokenUtils;
+import org.apache.poi.util.StringUtil;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -53,6 +55,13 @@ public class UserService extends ServiceImpl<UserMapper,User> {
             userDTO.setToken(token);
 
             String role = one.getRole();
+            //注册用户时默认为普通用户
+            if(StrUtil.isBlank(role))
+            {
+                role="ROLE_ADMIN";
+            }
+
+
             //设置用户的菜单列表
             List<Menu> roleMenus = getRoleMenus(role);
             userDTO.setMenus(roleMenus);
